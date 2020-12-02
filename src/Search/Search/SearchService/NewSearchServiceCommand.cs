@@ -17,6 +17,8 @@ using Microsoft.Azure.Commands.Management.Search.Properties;
 using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Management.Search.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 
 namespace Microsoft.Azure.Commands.Management.Search.SearchService
@@ -69,6 +71,16 @@ namespace Microsoft.Azure.Commands.Management.Search.SearchService
             HelpMessage = HostingModeHelpMessage)]
         public PSHostingMode? HostingMode { get; set; }
 
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "test")]
+        public PSPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        [Parameter(
+            Mandatory = false,
+            HelpMessage = "test")]
+        public PSIpRule[] NetworkRuleSet { get; set; }
+
         public override void ExecuteCmdlet()
         {
             Azure.Management.Search.Models.SearchService searchService = null;
@@ -90,6 +102,15 @@ namespace Microsoft.Azure.Commands.Management.Search.SearchService
                                                                                     partitionCount: PartitionCount,
                                                                                     hostingMode: (HostingMode)HostingMode);
             }
+
+            searchService = new Azure.Management.Search.Models.SearchService(name: Name,
+                                                                                location: Location,
+                                                                                sku: new Sku((SkuName)Sku),
+                                                                                replicaCount: ReplicaCount,
+                                                                                partitionCount: PartitionCount,
+                                                                                hostingMode: (HostingMode?)HostingMode,
+                                                                                publicNetworkAccess: (PublicNetworkAccess?)PublicNetworkAccess,
+                                                                                networkRuleSet: new NetworkRuleSet(NetworkRuleSet.Select(ipRule => (IpRule) ipRule).ToList()));
 
             if (ShouldProcess(Name, Resources.CreateSearchService))
             {

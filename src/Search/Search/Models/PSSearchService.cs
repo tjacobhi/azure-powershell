@@ -15,6 +15,7 @@
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 using Microsoft.WindowsAzure.Commands.Common.Attributes;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Microsoft.Azure.Commands.Management.Search.Models
 {
@@ -38,10 +39,22 @@ namespace Microsoft.Azure.Commands.Management.Search.Models
         [Ps1Xml(Label = "Partition Count", Target = ViewControl.List, Position = 5)]
         public int? PartitionCount { get; private set; }
 
-        [Ps1Xml(Label = "Hosting Mode", Target = ViewControl.List, Position = 6)]
+        [Ps1Xml(Label = "Status", Target = ViewControl.List, Position = 6)]
+        public PSSearchServiceStatus? Status { get; private set; }
+
+        [Ps1Xml(Label = "Hosting Mode", Target = ViewControl.List, Position = 7)]
         public PSHostingMode? HostingMode { get; private set; }
 
-        [Ps1Xml(Label = "Resource Id", Target = ViewControl.List, Position = 7)]
+        [Ps1Xml(Label = "Public Network Access", Target = ViewControl.List, Position = 8)]
+        public PSPublicNetworkAccess? PublicNetworkAccess { get; private set; }
+
+        [Ps1Xml(Label = "Network Rule Set", Target = ViewControl.List, Position = 9)]
+        public IList<PSIpRule> NetworkRuleSet { get; private set; }
+
+        [Ps1Xml(Label = "Private Endpoint Connections", Target = ViewControl.List, Position = 10)]
+        public IList<PSPrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        [Ps1Xml(Label = "Resource Id", Target = ViewControl.List, Position = 11)]
         public string Id { get; private set; }
 
         public IDictionary<string, string> Tags { get; set; }
@@ -61,9 +74,29 @@ namespace Microsoft.Azure.Commands.Management.Search.Models
             ReplicaCount = searchService.ReplicaCount;
             PartitionCount = searchService.PartitionCount;
 
+            Status = (PSSearchServiceStatus)searchService.Status;
+
             if (searchService.HostingMode != null)
             {
                 HostingMode = (PSHostingMode)searchService.HostingMode;
+            }
+
+            if (searchService.PublicNetworkAccess != null)
+            {
+                PublicNetworkAccess = (PSPublicNetworkAccess)searchService.PublicNetworkAccess;
+            }
+
+            NetworkRuleSet = new List<PSIpRule>();
+            if (searchService.NetworkRuleSet != null)
+            {
+                NetworkRuleSet = searchService.NetworkRuleSet.IpRules.Select(ipRule => (PSIpRule)ipRule).ToList();
+            }
+
+            PrivateEndpointConnections = new List<PSPrivateEndpointConnection>();
+            if (searchService.PrivateEndpointConnections != null)
+
+            {
+                PrivateEndpointConnections = searchService.PrivateEndpointConnections.Select(pec => (PSPrivateEndpointConnection)pec).ToList();
             }
 
             Tags = searchService.Tags;

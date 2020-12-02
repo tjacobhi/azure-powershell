@@ -18,6 +18,8 @@
         - Additional information about change #1
 -->
 ## Upcoming Release
+* Added support for Private Endpoints
+	- Updated dependency for Microsoft.Azure.Management.Search from 3.0.0 to 4.0.0
 
 ## Version 0.7.4
 * Update references in .psd1 to use relative path

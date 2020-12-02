@@ -97,6 +97,24 @@ namespace Microsoft.Azure.Commands.Management.Search.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove Private Endpoint Connection &apos;{0}&apos;..
+        /// </summary>
+        internal static string RemovePrivateEndpointConnection {
+            get {
+                return ResourceManager.GetString("RemovePrivateEndpointConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove Private Endpoint Connection &apos;{0&apos;?.
+        /// </summary>
+        internal static string RemovePrivateEndpointConnectionWarning {
+            get {
+                return ResourceManager.GetString("RemovePrivateEndpointConnectionWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove query key &apos;{0}&apos;..
         /// </summary>
         internal static string RemoveQueryKey {

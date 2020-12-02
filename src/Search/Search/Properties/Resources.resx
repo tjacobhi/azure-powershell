@@ -129,6 +129,12 @@
   <data name="RegenerateAdminKeyWarning" xml:space="preserve">
     <value>Are you sure you want to regenerate '{0}' key for Search Service '{1}'?</value>
   </data>
+  <data name="RemovePrivateEndpointConnection" xml:space="preserve">
+    <value>Remove Private Endpoint Connection '{0}'.</value>
+  </data>
+  <data name="RemovePrivateEndpointConnectionWarning" xml:space="preserve">
+    <value>Are you sure you want to remove Private Endpoint Connection '{0'?</value>
+  </data>
   <data name="RemoveQueryKey" xml:space="preserve">
     <value>Remove query key '{0}'.</value>
   </data>
